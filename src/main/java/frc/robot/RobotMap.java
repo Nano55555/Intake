@@ -15,5 +15,6 @@ public class RobotMap {
     public static WPI_TalonFX rightFrontDrivePort= new WPI_TalonFX(Right_front_drive_port);
     public static WPI_TalonFX leftBackDrivePort= new WPI_TalonFX(Left_back_drive_port);
     public static WPI_TalonFX rightBackDrivePort= new WPI_TalonFX(Right_back_drive_port);
+    
     public static WPI_TalonFX inTakeMotor = new WPI_TalonFX(Intake_motor_port);
 }
