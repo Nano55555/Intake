@@ -13,6 +13,7 @@ import frc.robot.commands.JoystickDrive;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
@@ -26,7 +27,7 @@ public class RobotContainer {
   public static IntakeSubsystem intakeSubsystem= new IntakeSubsystem();
   public static DriveSubsystem driveSubsystem= new DriveSubsystem();
   public static final XboxController driverController= new XboxController(0);
-
+  private final LimeLightSubsystem limeLightSubsystem= new LimeLightSubsystem();
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 

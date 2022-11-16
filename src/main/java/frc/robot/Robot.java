@@ -4,11 +4,17 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,6 +27,8 @@ public class Robot extends TimedRobot {
 
   public static RobotContainer m_robotContainer;
   private DriveSubsystem driveSubsystem=m_robotContainer.driveSubsystem;
+  private final WPI_TalonFX leftBackMotor = RobotMap.leftBackDrivePort;
+  private final WPI_TalonFX rightBackMotor = RobotMap.rightBackDrivePort;
   
 
 
@@ -33,10 +41,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    //m_robotContainer.driveSubsystem.setModePercentVoltage();
     m_robotContainer.driveSubsystem.resetEncoders();
-  
-
+    LimeLightSubsystem.turn_LED_ON();
+    
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+    camera.setResolution(240, 180);
+    camera.setFPS(8);
   }
 
   /**
@@ -53,6 +63,15 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    
+    SmartDashboard.putNumber("Left Back F500 Temp C", leftBackMotor.getTemperature());
+    SmartDashboard.putNumber("Right Back F500 Temp C", rightBackMotor.getTemperature());
+
+    SmartDashboard.putNumber("Left Back Motor Encoder", driveSubsystem.getLeftBackEncoderPosition());
+
+    SmartDashboard.putBoolean("Within 1.7 to 5 Meters", LimeLightSubsystem.isWithinDistance());
+    SmartDashboard.putNumber("Limelight Offset", LimeLightSubsystem.getLimelightX());
+    SmartDashboard.putNumber("Horizontal Distance", LimeLightSubsystem.getHorizontalDistance());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
